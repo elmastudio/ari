@@ -205,11 +205,11 @@ endif;
 
 /* Custom Ari Social Links Widget */
 class Ari_SocialLinks_Widget extends WP_Widget {
-	function Ari_SocialLinks_Widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname' => 'widget_social_links',
 			'description' => 'A list with your social profile links' );
-		$this->WP_Widget('social_links', 'Ari Social Links', $widget_ops);
+		parent::__construct('social_links', 'Ari Social Links', $widget_ops);
 	}
 	function widget($args, $instance) {
 		extract($args, EXTR_SKIP);
@@ -342,7 +342,7 @@ class Ari_SocialLinks_Widget extends WP_Widget {
 }
 
 // register Ari SocialLinks Widget
-add_action('widgets_init', create_function('', 'return register_widget("Ari_SocialLinks_Widget");'));
+add_action('widgets_init', function() { return register_widget("Ari_SocialLinks_Widget"); });
 
 /* Ari Theme-Options Page */
 function themeoptions_admin_menu()
@@ -446,5 +446,5 @@ function insert_custom_css(){
 add_action('wp_head', 'insert_custom_css');
 
 /* Remove the default CSS style from the WP image gallery */
-add_filter('gallery_style', create_function('$a', 'return "
-<div class=\'gallery\'>";'));
+add_filter('gallery_style', function($a) { return "
+<div class='gallery'>"; });

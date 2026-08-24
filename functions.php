@@ -2,10 +2,10 @@
 
 /* Make theme available for translation */
 /* Translations can be filed in the /languages/ directory */
-load_theme_textdomain( 'ari', TEMPLATEPATH . '/languages' );
+load_theme_textdomain( 'ari', get_template_directory() . '/languages' );
 
 	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
+	$locale_file = get_template_directory() . "/languages/$locale.php";
 	if ( is_readable( $locale_file ) )
 		require_once( $locale_file );
 
@@ -37,20 +37,27 @@ function ari_setup() {
 }
 endif;
 
-/* Calls jQuery and SmoothScroll im Footer  */
+/* Calls jQuery and SmoothScroll in the footer.
+   Enqueued on wp_enqueue_scripts, which is the hook WordPress asks for.
+   It used to run on after_setup_theme, which is too early: since WP 3.3
+   that logs "wp_enqueue_script was called incorrectly" for every request.
+   The pre-3.0 branch that stood here went with it; the theme needs a far
+   newer WordPress than that anyway. */
 function ari_smoothscroll_init() {
-    if ( !is_admin() ) {
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'smoothscroll', get_template_directory_uri() . '/js/smoothscroll.js', array( 'jquery'), '1.0', true ); 
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'smoothscroll', get_template_directory_uri() . '/js/smoothscroll.js', array( 'jquery' ), '1.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'ari_smoothscroll_init' );
+
+/* Threaded comments need core's reply script. It was enqueued from inside
+   header.php's <head>, which is both too late to be registered properly and
+   the same "called incorrectly" notice; the hook is the place for it. */
+function ari_comment_reply_script() {
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
     }
 }
-// works also for WP < version 3.0
-global $wp_version;
-if ( version_compare($wp_version, "3.0alpha", "<") ) {
-    add_action( 'init', 'ari_smoothscroll_init' );
-} else {
-    add_action( 'after_setup_theme', 'ari_smoothscroll_init' );
-}
+add_action( 'wp_enqueue_scripts', 'ari_comment_reply_script' );
 
 /* Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link. */
 function ari_page_menu_args( $args ) {

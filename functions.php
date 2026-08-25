@@ -219,6 +219,7 @@ class Ari_SocialLinks_Widget extends WP_Widget {
 		parent::__construct('social_links', 'Ari Social Links', $widget_ops);
 	}
 	function widget($args, $instance) {
+		/* __php8_keys */ $instance = wp_parse_args( (array) $instance, array( 'title' => null, 'rss_title' => null, 'rss_url' => null, 'twitter_title' => null, 'twitter_url' => null, 'fb_title' => null, 'fb_url' => null, 'googleplus_title' => null, 'googleplus_url' => null, 'flickr_title' => null, 'flickr_url' => null, 'vimeo_title' => null, 'vimeo_url' => null, 'xing_title' => null, 'xing_url' => null, 'linkedin_title' => null, 'linkedin_url' => null, 'delicious_title' => null, 'delicious_url' => null ) );
 		extract($args, EXTR_SKIP);
 		echo $before_widget;
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
@@ -282,6 +283,7 @@ class Ari_SocialLinks_Widget extends WP_Widget {
 		return $instance;
 	}
 	function form($instance) {
+		/* __php8_keys */ $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'rss_title' => '', 'rss_url' => '', 'twitter_title' => '', 'twitter_url' => '', 'fb_title' => '', 'fb_url' => '', 'googleplus_title' => '', 'googleplus_url' => '', 'flickr_title' => '', 'flickr_url' => '', 'vimeo_title' => '', 'vimeo_url' => '', 'xing_title' => '', 'xing_url' => '', 'linkedin_title' => '', 'linkedin_url' => '', 'delicious_title' => '', 'delicious_url' => '' ) );
 		$instance = wp_parse_args(
 		(array) $instance, array( 
 			'title' => '',

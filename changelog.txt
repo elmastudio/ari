@@ -2,6 +2,10 @@
 For detailed documentation and support please visit: http://www.elmastudio.de/wordpress-themes/ari/
 ------------------------------------------------------------------------------------------------------------
 
+Version 1.0.10 - 25th August 2026
+-------------------------------
+1. PHP 8 compatibility. Theme options and widget settings no longer trigger warnings; attachment pages, related posts and comment display fixed where affected.
+
 Version 1.0.9 - 26th August 2011
 -------------------------------
 1. Bugfix for searchform widget beacuse the searchform widget was breaking the layout (had to delete unneeded closing div in line 99 of functions.php)
